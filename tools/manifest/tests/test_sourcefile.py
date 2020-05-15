@@ -447,14 +447,14 @@ test()"""
 
 
 @pytest.mark.parametrize("input,expected", [
-    (b"""//META: foo=bar\n""", [(b"foo", b"bar")]),
-    (b"""// META: foo=bar\n""", [(b"foo", b"bar")]),
-    (b"""//  META: foo=bar\n""", [(b"foo", b"bar")]),
+    (b"""//META: foo=bar\n""", [("foo", "bar")]),
+    (b"""// META: foo=bar\n""", [("foo", "bar")]),
+    (b"""//  META: foo=bar\n""", [("foo", "bar")]),
     (b"""\n// META: foo=bar\n""", []),
     (b""" // META: foo=bar\n""", []),
-    (b"""// META: foo=bar\n// META: baz=quux\n""", [(b"foo", b"bar"), (b"baz", b"quux")]),
-    (b"""// META: foo=bar\n\n// META: baz=quux\n""", [(b"foo", b"bar")]),
-    (b"""// META: foo=bar\n// Start of the test\n// META: baz=quux\n""", [(b"foo", b"bar")]),
+    (b"""// META: foo=bar\n// META: baz=quux\n""", [("foo", "bar"), ("baz", "quux")]),
+    (b"""// META: foo=bar\n\n// META: baz=quux\n""", [("foo", "bar")]),
+    (b"""// META: foo=bar\n// Start of the test\n// META: baz=quux\n""", [("foo", "bar")]),
     (b"""// META:\n""", []),
     (b"""// META: foobar\n""", []),
 ])

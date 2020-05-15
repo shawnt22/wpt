@@ -56,7 +56,7 @@ def replace_end(s, old, new):
 
 
 def read_script_metadata(f, regexp):
-    # type: (BinaryIO, Pattern[bytes]) -> Iterable[Tuple[bytes, bytes]]
+    # type: (BinaryIO, Pattern[bytes]) -> Iterable[Tuple[Text, Text]]
     """
     Yields any metadata (pairs of bytestrings) from the file-like object `f`,
     as specified according to a supplied regexp.
@@ -80,11 +80,11 @@ _any_variants = {
     "dedicatedworker": {"suffix": ".any.worker.html"},
     "worker": {"longhand": {"dedicatedworker", "sharedworker", "serviceworker"}},
     "jsshell": {"suffix": ".any.js"},
-}  # type: Dict[bytes, Dict[str, Any]]
+}  # type: Dict[Text, Dict[Text, Any]]
 
 
 def get_any_variants(item):
-    # type: (bytes) -> Set[bytes]
+    # type: (Text) -> Set[Text]
     """
     Returns a set of variants (bytestrings) defined by the given keyword.
     """
@@ -98,7 +98,7 @@ def get_any_variants(item):
 
 
 def get_default_any_variants():
-    # type: () -> Set[bytes]
+    # type: () -> Set[Text]
     """
     Returns a set of variants (bytestrings) that will be used by default.
     """
@@ -236,7 +236,7 @@ class SourceFile(object):
         self._hash = hash
 
     def __getstate__(self):
-        # type: () -> Dict[str, Any]
+        # type: () -> Dict[Text, Any]
         # Remove computed properties if we pickle this class
         rv = self.__dict__.copy()
 

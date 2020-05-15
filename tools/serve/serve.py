@@ -178,7 +178,7 @@ class HtmlWrapperHandler(WrapperHandler):
 
     def check_exposure(self, request):
         if self.global_type:
-            globals = ""
+            globals = u""
             for (key, value) in self._get_metadata(request):
                 if key == "global":
                     globals = value
@@ -205,7 +205,7 @@ class HtmlWrapperHandler(WrapperHandler):
 
 
 class WorkersHandler(HtmlWrapperHandler):
-    global_type = b"dedicatedworker"
+    global_type = "dedicatedworker"
     path_replace = [(".any.worker.html", ".any.js", ".any.worker.js"),
                     (".worker.html", ".worker.js")]
     wrapper = """<!doctype html>
@@ -234,7 +234,7 @@ class WindowHandler(HtmlWrapperHandler):
 
 
 class AnyHtmlHandler(HtmlWrapperHandler):
-    global_type = b"window"
+    global_type = "window"
     path_replace = [(".any.html", ".any.js")]
     wrapper = """<!doctype html>
 <meta charset=utf-8>
@@ -254,7 +254,7 @@ self.GLOBAL = {
 
 
 class SharedWorkersHandler(HtmlWrapperHandler):
-    global_type = b"sharedworker"
+    global_type = "sharedworker"
     path_replace = [(".any.sharedworker.html", ".any.js", ".any.worker.js")]
     wrapper = """<!doctype html>
 <meta charset=utf-8>
@@ -269,7 +269,7 @@ fetch_tests_from_worker(new SharedWorker("%(path)s%(query)s"));
 
 
 class ServiceWorkersHandler(HtmlWrapperHandler):
-    global_type = b"serviceworker"
+    global_type = "serviceworker"
     path_replace = [(".any.serviceworker.html", ".any.js", ".any.worker.js")]
     wrapper = """<!doctype html>
 <meta charset=utf-8>
