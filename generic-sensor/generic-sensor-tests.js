@@ -397,7 +397,7 @@ function runGenericSensorTests(sensorName,
     const mockSensor = await sensorProvider.getCreatedSensor(sensorName);
     await mockSensor.setSensorReading(readings);
 
-    const fastCounter = await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       let fastSensorNotifiedCounter = 0;
       let slowSensorNotifiedCounter = 0;
 
@@ -411,10 +411,17 @@ function runGenericSensorTests(sensorName,
           const slowSensor = new sensorType({frequency: slowFrequency});
           slowSensor.onreading = () => {
             // Skip the initial notification that always comes immediately.
-            if (slowSensorNotifiedCounter === 1) {
+            if (slowSensorNotifiedCounter === 2) {
               fastSensor.stop();
               slowSensor.stop();
-              resolve(fastSensorNotifiedCounter);
+
+              try {
+                assert_greater_than(fastSensorNotifiedCounter, 3,
+                    "Fast sensor overtakes the slow one");
+                resolve();
+              } catch (e) {
+                reject(e);
+              }
             }
             slowSensorNotifiedCounter++;
           }
@@ -425,7 +432,6 @@ function runGenericSensorTests(sensorName,
       }
       fastSensor.onerror = reject;
     });
-    assert_greater_than(fastCounter, 2, "Fast sensor overtakes the slow one");
   }, `${sensorName}: frequency hint works.`);
 
   sensor_test(async (t, sensorProvider) => {
